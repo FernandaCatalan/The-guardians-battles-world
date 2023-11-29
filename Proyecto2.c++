@@ -14,6 +14,12 @@ struct Ciudad {
     string nombre;
 };
 
+// Estructura para la batalla
+struct ResultadoBatalla {
+    string nombreGuardian;
+    int puntos;
+};
+
 // Clase grafo
 class Grafo {
 public:
@@ -302,13 +308,75 @@ void conocerReino(const Grafo& grafo) {
 }
 
 // Función para simular la presencia en una batalla
-void presenciarBatalla() {
-    cout << "Batalla:\n";
+void presenciarBatalla(Grafo& grafo) {
+    cout << "Presenciar una batalla:\n";
+
+    // Selección del guardián retador
+    cout << "Seleccione un guardián retador:\n";
+    grafo.mostrarGuardianes();
+
+    string nombreGuardianRetador;
+    cout << "Ingrese el nombre del guardian retador: ";
+    cin.ignore();
+    getline(cin, nombreGuardianRetador);
+
+    // Obtener el índice del guardián retador
+    int indiceGuardianRetador = -1;
+    for (size_t i = 0; i < grafo.obtenerGuardianes().size(); ++i) {
+        if (grafo.obtenerGuardianes()[i].nombre == nombreGuardianRetador) {
+            indiceGuardianRetador = i;
+            break;
+        }
+    }
+
+    if (indiceGuardianRetador == -1) {
+        cerr << "Guardian retador no encontrado\n";
+        return;
+    }
+
+    Grafo::Guardian& guardianRetador = grafo.obtenerGuardianes()[indiceGuardianRetador];
+
+    // Seleccionar ciudad para la batalla
+    cout << "Seleccione una ciudad para la batalla:\n";
+    grafo.mostrarListaAdyacencia();
+
+    string nombreCiudadBatalla;
+    cout << "Ingrese el nombre de la ciudad para la batalla: ";
+    getline(cin, nombreCiudadBatalla);
+
+    int indiceCiudadBatalla = grafo.obtenerIndiceCiudad(nombreCiudadBatalla);
+    if (indiceCiudadBatalla == -1) {
+        cerr << "Ciudad no encontrada\n";
+        return;
+    }
+
+    // Obtener la probabilidad de ganar
+    srand(static_cast<unsigned int>(time(nullptr)));
+    int probabilidad = rand() % 10;  // Número aleatorio entre 0 y 9
+
+    // Calcular el resultado de la batalla
+    int puntosGanados;
+    if (probabilidad < 4) {
+        cout << "¡El guardian retador ha perdido la batalla!\n";
+        puntosGanados = 0;
+    } else {
+        cout << "¡El guardian retador ha ganado la batalla!\n";
+        puntosGanados = (guardianRetador.maestro == "Maestro") ? 5 : 3;
+    }
+
+    // Actualizar puntos y mostrar cambios en la lista de candidatos
+    guardianRetador.nivelPoder += puntosGanados;
+    grafo.mostrarGuardianes();
+
+    // Guardar el resultado de la batalla
+    ResultadoBatalla resultado;
+    resultado.nombreGuardian = nombreGuardianRetador;
+    resultado.puntos = puntosGanados;
+
+    // Puedes almacenar este resultado en una lista/vector si deseas llevar un historial de batallas
 }
 
 int main() {
-    Grafo grafo;
-
     ifstream archivo("guardians.conf");
     if (!archivo.is_open()) {
         cerr << "Error al abrir el archivo guardians.conf\n";
@@ -378,7 +446,8 @@ int main() {
         }
 
         string ciudadGuardian;
-        archivo >> ciudadGuardian;
+        archivo.ignore();  // Ignorar la coma
+        getline(archivo, ciudadGuardian);
         int indiceCiudadGuardian = grafo.obtenerIndiceCiudad(ciudadGuardian);
 
         if (indiceCiudadGuardian == -1) {
@@ -389,7 +458,6 @@ int main() {
         nuevoGuardian.indiceCiudad = indiceCiudadGuardian;
         grafo.agregarGuardian(nuevoGuardian);
     }
-
     archivo.close();
 
     // Mostrar la lista de adyacencia, la matriz de adyacencia y los guardianes
@@ -422,7 +490,7 @@ int main() {
                 conocerReino(grafo);
                 break;
             case 4:
-                presenciarBatalla();
+                presenciarBatalla(grafo);
                 break;
             case 5:
                 std::cout << "Saliendo del programa...¡Hasta luego!\n";

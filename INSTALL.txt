@@ -4,4 +4,5 @@ Instrucciones para realizar la instalación del Programa.
 2. Debe clonar el repositorio en su computador.
 3. Debe abrir el archivo Proyecto2.c++ en el Visual Studio Code.
 4. Debe tener en la misma carpeta el archivo que tiene la información de los guardianes (guardians.conf) y las ciudades (cities.conf).
-5. Debe abrir una nueva terminal y escribir "./Proyecto2".
+5. Debe compilar el programa utilizando: g++ -o Proyecto2 Proyecto2.c++.
+6. Ejecute el programa con ./Proyecto2.
