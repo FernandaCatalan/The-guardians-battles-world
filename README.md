@@ -5,7 +5,7 @@
 Este proyecto consiste en la implementación de un juego de guardianes donde los jugadores asumen el papel de guardianes con el objetivo de alcanzar el top de los mejores guardianes del reino. Las batallas se llevan a cabo en diferentes ciudades, y los jugadores acumulan puntos de victoria en función de los resultados de las batallas.
 
 ## Link video
-
+https://youtu.be/j1JFd91ov4k
 
 ## Reglas del Juego
 
@@ -51,48 +51,44 @@ Mostrar información general sobre el reino, incluyendo el número de ciudades y
 ### 4. presenciarBatalla
 Simular una batalla con un guardián retador en una ciudad seleccionada.
 
-## Estructuras
+## Funcionalidades
 
-### 1. Ciudad
-Propósito: Estructura que representa una ciudad en el juego.
-Atributos:
-nombre: Nombre de la ciudad.
+### Grafo
 
-### 2. Guardian
-Propósito: Estructura que representa a un guardián en el juego.
-Atributos:
-  -nombre: Nombre del guardián.
-  -nivelPoder: Nivel de poder del guardián.
-  -maestro: Nombre del maestro del guardián.
-  -indiceCiudad: Índice de la ciudad en el grafo a la que el guardián pertenece.
+#### Clase `Grafo`
 
-### 3. Grafo
-Propósito: Clase que representa el grafo del reino.
-Métodos Principales:
-  -agregarCiudad: Agrega una ciudad al grafo.
-  -agregarConexion: Agrega una conexión entre dos ciudades en el grafo.
-  -obtenerIndiceCiudad: Obtiene el índice de una ciudad dada su nombre.
-  -agregarGuardian: Agrega un guardián al grafo.
-  -mostrarListaAdyacencia: Muestra la lista de adyacencia del grafo.
-  -mostrarMatrizAdyacencia: Muestra la matriz de adyacencia del grafo.
-  -mostrarGuardianes: Muestra la información de los guardianes en el grafo.
-  -verListaCandidatos: Muestra la lista de candidatos en el rango de nivel de poder especificado.
-  -verGuardian: Muestra la información detallada de un guardián específico.
-  -conocerReino: Muestra información general sobre el reino.
-  -presenciarBatalla: Simula la presencia en una batalla.
+La clase `Grafo` representa el reino y proporciona las siguientes funcionalidades:
 
-### 4. Otras Funciones
+- **Agregar Ciudad:** Agrega una ciudad al reino con su lista de guardianes.
+- **Obtener Guardianes de una Ciudad:** Obtiene la lista de guardianes asociados a una ciudad.
+- **Obtener Ciudades:** Obtiene la lista de todas las ciudades en el reino.
+- **Agregar Camino:** Agrega un camino entre dos ciudades con una distancia específica.
+- **Buscar Guardian:** Busca un guardián en el reino.
 
--hayCamino: Método privado en la clase Grafo que verifica si hay un camino entre dos ciudades.
--existeCamino: Método público en la clase Grafo que verifica si existe un camino entre dos ciudades.
--agregarNuevoCamino: Método en la clase Grafo que agrega un nuevo camino entre dos ciudades.
--mostrarCaminosExistentes: Método en la clase Grafo que muestra los caminos existentes en el grafo.
--existeCaminoEntreCiudades: Método en la clase Grafo que verifica si existe un camino entre dos ciudades.
+#### Método `conocerReino`
 
+Muestra un menú interactivo que permite al usuario explorar el reino, viajar entre ciudades y consultar los caminos existentes.
 
+### Árboles
 
+#### Clase `ArbolGeneral`
 
+Representa un árbol general que organiza a los guardianes según sus relaciones maestro-aprendiz.
 
+- **Insertar Guardián:** Inserta un guardián en el árbol.
+- **Buscar Guardián:** Busca un guardián en el árbol.
+- **Recorrer en Profundidad:** Realiza un recorrido en profundidad del árbol.
 
+#### Clase `ArbolBinario`
 
+Representa un árbol binario que organiza a los guardianes.
 
+- **Insertar Guardián:** Inserta un guardián en el árbol.
+- **Buscar Guardián:** Busca un guardián en el árbol.
+- **Recorrer en Orden:** Realiza un recorrido en orden del árbol.
+
+### Guardianes y Batallas
+
+- **Estructura `Guardian`:** Almacena información sobre un guardián, incluyendo nombre, nivel de poder, maestro y ciudad.
+- **Función `leerGuardianesDesdeArchivo`:** Lee los guardianes desde un archivo y los almacena en un mapa.
+- **Función `presenciarBatalla`:** Simula una batalla entre dos guardianes y actualiza sus niveles de poder.
